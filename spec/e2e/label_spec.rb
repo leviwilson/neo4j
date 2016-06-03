@@ -133,6 +133,11 @@ describe 'Neo4j::ActiveNode' do
       end
     end
 
+    before do
+      Neo4j::Label.drop_all_constraints
+      Neo4j::Label.drop_all_indexes
+    end
+
     it 'creates an index' do
       expect(clazz.mapped_label.indexes).to eq(property_keys: [[:name], [:uuid]])
     end
@@ -189,11 +194,9 @@ describe 'Neo4j::ActiveNode' do
         end
       end
 
-      after { Neo4j::Label.drop_all_constraints }
+      subject { overridden_label_class.mapped_label }
 
-      subject { overridden_label_class.mapped_label.indexes }
-
-      its([:property_keys]) { should match_array [[:value], [:uuid]] }
+      its(:indexes) { should match property_keys: a_collection_containing_exactly([:value], [:uuid]) }
     end
   end
 
