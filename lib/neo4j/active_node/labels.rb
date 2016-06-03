@@ -158,7 +158,7 @@ module Neo4j
         def set_mapped_label_name(name)
           ActiveSupport::Deprecation.warn 'set_mapped_label_name is deprecated, use self.mapped_label_name= instead.', caller
 
-          self.tapped_label_name = name
+          self.mapped_label_name = name
         end
         # rubocop:enable Style/AccessorMethodName
 
