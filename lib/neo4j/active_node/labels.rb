@@ -150,7 +150,7 @@ module Neo4j
 
         def mapped_label_name=(name)
           (@mapped_label_name = name.to_sym).tap do |_|
-            id_property *id_property_info.values_at(:name, :type)
+            id_property(*id_property_info.values_at(:name, :type))
           end
         end
 
