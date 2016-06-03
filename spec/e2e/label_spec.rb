@@ -178,6 +178,23 @@ describe 'Neo4j::ActiveNode' do
         end.to change { Neo4j::Label.constraint?(clazz.mapped_label_name, :name) }.from(true).to(false)
       end
     end
+
+    context 'when overriding the mapped_label_name' do
+      let(:overridden_label_class) do
+        UniqueClass.create do
+          include Neo4j::ActiveNode
+          self.mapped_label_name = :OneToRuleThemAll
+
+          property :value, constraint: :unique
+        end
+      end
+
+      after { Neo4j::Label.drop_all_constraints }
+
+      subject { overridden_label_class.mapped_label.indexes }
+
+      its([:property_keys]) { should match_array [[:value], [:uuid]] }
+    end
   end
 
   describe 'index?' do

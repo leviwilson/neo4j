@@ -149,14 +149,16 @@ module Neo4j
         end
 
         def mapped_label_name=(name)
-          @mapped_label_name = name.to_sym
+          (@mapped_label_name = name.to_sym).tap do |_|
+            id_property *id_property_info.values_at(:name, :type)
+          end
         end
 
         # rubocop:disable Style/AccessorMethodName
         def set_mapped_label_name(name)
           ActiveSupport::Deprecation.warn 'set_mapped_label_name is deprecated, use self.mapped_label_name= instead.', caller
 
-          self.mapped_label_name = name
+          self.tapped_label_name = name
         end
         # rubocop:enable Style/AccessorMethodName
 
