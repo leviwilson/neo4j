@@ -24,7 +24,7 @@ module Neo4j
       end
 
       def class_from_type(rel_type)
-        Neo4j::ActiveRel::Types::WRAPPED_CLASSES[rel_type] || Neo4j::ActiveRel::Types::WRAPPED_CLASSES[rel_type] = rel_type.to_s.camelize
+        Neo4j::ActiveRel::Types::WRAPPED_CLASSES[rel_type] || Neo4j::ActiveRel::Types::WRAPPED_CLASSES[rel_type] = rel_type.to_s.downcase.camelize
       end
     end
   end

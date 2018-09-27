@@ -28,6 +28,11 @@ describe Neo4j::RelWrapping do
 
         its('start_node.neo_id') { should eq(1) }
         its('end_node.neo_id') { should eq(2) }
+
+        context 'lazily loaded' do
+          before { Neo4j::ActiveRel::Types::WRAPPED_CLASSES.clear }
+          it { should be_a(HasFoo) }
+        end
       end
     end
   end
